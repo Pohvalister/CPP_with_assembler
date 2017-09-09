@@ -48,14 +48,34 @@ _Z18memcpy_asm_16_sidePKvPvm:
     push %rsi
     push %rdx
 
-	movq	$0, %rcx
+    movq    %rsi, %rax
+    	ANDq    $15, %rax
+    	movq    $16, %rcx
+    	subq    %rax, %rcx
+
+    	push %rdi
+            push %rsi
+            push %rdx
+            push %rcx
+            movq %rcx, %rdx
+    	call    memcpy_asm_8_side
+    	pop %rcx
+    	pop %rdx
+    	pop %rsi
+    	pop %rdi
+
+    	addq    %rcx, %rdi
+        addq    %rcx, %rsi
+        subq    %rcx, %rdx
+
+    movq	$0, %rcx
 
 .loop_main:
 	leaq	16(%rcx), %rbx
 	cmpq	%rdx, %rbx
 	jnb		.endLoop_main
-	movups	(%rdi), %xmm0
-	movups 	%xmm0, (%rsi)
+	MOVDQu	(%rdi), %xmm0
+	movntdq %xmm0, (%rsi)
 	addq	$16, %rdi
 	addq	$16, %rsi
 	addq	$16, %rcx
