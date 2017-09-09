@@ -36,6 +36,10 @@ void memcpy_asm_8_inline(void const *from, void *to, size_t size) {
 
 void memcpy_asm_16_inline(void const *from, void *to, size_t size) {
 
+    if (size<16){
+        memcpy_by_elem(from,to,size);
+        return;
+    }
     size_t aligning = 16 - (size_t) to % 16;
     memcpy_by_elem(from, to, aligning);
     size_t i = aligning;
