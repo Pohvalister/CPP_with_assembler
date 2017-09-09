@@ -12,8 +12,7 @@ memcpy_asm_8_side:		#AT&T инструкция источник, приёмни�
 							# rsi - void* to
 							# rdx - size_t size
 
-	push %rbp
-	push %rsp
+
 	push %rdi
 	push %rsi
 	push %rdx
@@ -35,8 +34,7 @@ memcpy_asm_8_side:		#AT&T инструкция источник, приёмни�
     pop %rdx
     pop %rsi
     pop %rdi
-    pop %rsp
-    pop %rbp
+
 
 	ret
 
@@ -45,8 +43,7 @@ memcpy_asm_8_side:		#AT&T инструкция источник, приёмни�
 .att_syntax
 _Z18memcpy_asm_16_sidePKvPvm:
 
-    push %rbp
-    push %rsp
+
     push %rdi
     push %rsi
     push %rdx
@@ -71,7 +68,5 @@ _Z18memcpy_asm_16_sidePKvPvm:
 	pop %rdx
     pop %rsi
     pop %rdi
-    pop %rsp
-    pop %rbp
 
 	ret
