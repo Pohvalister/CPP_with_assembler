@@ -1,8 +1,8 @@
+
 #include <iostream>
 
 
 using namespace std;
-//something nesessary
 #include  <xmmintrin.h> //SSE
 
 //
@@ -31,7 +31,7 @@ uint64_t spacesCount(std::string const &str) {
 
     size_t aligning = 0;
     bool bsBefore = true;
-    while (((size_t) (str_data + aligning) % 16 != 0)) {
+    while (((size_t) (str_data + aligning) % 16 != 0)&&aligning==0) {
         if (bsBefore && *(str_data + aligning) != ' ')
             answer++;
         bsBefore = (*(str_data + aligning) == ' ');
@@ -52,8 +52,7 @@ uint64_t spacesCount(std::string const &str) {
     size_t i = aligning;
     __m128i result = _mm_setzero_si128();
     for (; i < symCount - 16; i += 16) {
-        
-
+      
         spaces_curr = _mm_cmpeq_epi8(_mm_load_si128((__m128i *) (str_data + i)), spaces_temp);//где правда -> -1 (0xff)
         spaces_shifted = _mm_cmpeq_epi8(_mm_loadu_si128((__m128i *) (str_data + i + 1)), spaces_temp);
 
@@ -84,9 +83,10 @@ uint64_t spacesCount(std::string const &str) {
 
 int main() {
     string str = "";
-    for (int i = 10001; i > 100; i--) {
+    for (int i = 1001; i > 100; i--) {
         for (int j = 0; j < i; j++)
             str += "a";
+        str+=" b";
         str += ' ';
     }
 
