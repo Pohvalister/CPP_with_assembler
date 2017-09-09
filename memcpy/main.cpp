@@ -35,8 +35,8 @@ void memcpy_asm_16_inline(void const * from, void* to, size_t size){
     for (;i+16 < size; i += 16) {
         __m128i bigReg;
         __asm__(
-        "movdqu\t(%1), %0\n\t"
-        "movntdq\t%0, (%2)\n\t"
+        "movups\t(%1), %0\n\t"
+        "movups\t%0, (%2)\n\t"
         :"=Yz"(bigReg)
         :"r"((const char *) from+i), "r"((char*) to + i)//x - любой регистр SSE, Yz - регистр xmm0
         );
@@ -78,6 +78,7 @@ int main() {
         time_t time;
 
         genHonest(from,to,(size_t)i);
+        to[123]='c';
         std::cout<<"\nChecking time with "<<i<<" values:\n";
         time= std::clock();
         memcpy_by_elem(from,to,(size_t)i);
@@ -85,12 +86,14 @@ int main() {
         check(from,to,(size_t)i);
 
         genHonest(from,to,(size_t)i);
+        to[6]='c';
         time=std::clock();
         memcpy_asm_8_side(from,to,(size_t)i);
         std::cout<<(clock()-time)<<" - 8 byte memcpy side func\n";
         check(from,to,(size_t)i);
 
         genHonest(from,to,(size_t)i);
+        to[5]='c';
         time=std::clock();
         memcpy_asm_8_inline(from,to,(size_t)i);
         std::cout<<(clock()-time)<<" - 8 byte memcpy inline func\n";
