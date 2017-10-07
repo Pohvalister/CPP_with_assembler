@@ -280,9 +280,8 @@ int main() {
     cout << res << "\n";
     cout << b << " "  << "\n";
     cout << "\n";
-    b = 123;
-    trampoline<long long(int, int, int, int, int, int, int, int, int)>
-            tr([&](int c1, int c2, int c3, int c4, int c5, int c6, int c7, int c8, int c9) {
+    trampoline<long long(int, int, float, int, int, int, int, int, double)>
+            tr([&](int c1, int c2, float c3, int c4, int c5, int c6, int c7, int c8, double c9) {
                    cout << c1 << " " << c2 << " " << c3 << " " << c4 << " " << c5 << " " << c6 << " ";
                    cout << c7 << " " << c8 << " " << c9 << "\n";
                    return 0;
@@ -290,11 +289,9 @@ int main() {
     );
     auto p = tr.get();
     {
-        int res = p(100, 200, 300, 400, 500, 600, 700, 800, 900);
+        int res = p(100, 200, 300.5, 400, 500, 600, 700, 800, 900.5);
         cout << res << "\n";
     }
-
-    b = 124;
 
     p(9, 8, 7, 6, 5, 4, 3, 2, 1);
 
