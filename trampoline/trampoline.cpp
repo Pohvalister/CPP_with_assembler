@@ -107,7 +107,7 @@ private:
     /*code instertion*/
     void organize_code(char *pcode, int int_count, int sse_count, void *func_ref, void *caller_ref) {
         //Аргументы функции вводятся в регистры в следующем порядке их следования. ;%rdi,%rsi,%rdx,%rcx,%r8 и %r9
-        const std::string move_comands[6] = {//moving arg registers to left
+        const std::string move_comands[6] = {//moving arg registers to right
                 "\x48\x89\xfe", /*mov rsi rdi*/
                 "\x48\x89\xf2", /*mov rdx rsi*/
                 "\x48\x89\xd1", /*mov rcx rdx*/
@@ -200,11 +200,11 @@ private:
 
         char *get_pointer() { return pcode; }
 
-        void i(int i1) { *pcode++ = i1; }
-        void i(int i1, int i2) { *pcode++ = i1;*pcode++ = i2; }
-        void i(int i1, int i2, int i3) {*pcode++ = i1;*pcode++ = i2;*pcode++ = i3; }
-        void i(int i1, int i2, int i3, int i4) {*pcode++ = i1;*pcode++ = i2;*pcode++ = i3;*pcode++ = i4; }
-        void i(int i1, int i2, int i3, int i4, int i5) {*pcode++ = i1;*pcode++ = i2;*pcode++ = i3;*pcode++ = i4;*pcode++ = i5; }
+        void i(char i1) { *pcode++ = i1; }
+        void i(char i1, char i2) { *pcode++ = i1;*pcode++ = i2; }
+        void i(char i1, char i2, char i3) {*pcode++ = i1;*pcode++ = i2;*pcode++ = i3; }
+        void i(char i1, char i2, char i3, char i4) {*pcode++ = i1;*pcode++ = i2;*pcode++ = i3;*pcode++ = i4; }
+        void i(char i1, char i2, char i3, char i4, char i5) {*pcode++ = i1;*pcode++ = i2;*pcode++ = i3;*pcode++ = i4;*pcode++ = i5;}
 
         void s(std::string str) { for (size_t i = 0; i < str.size(); i++)*pcode++ = str[i];}
         void s(int32_t i1) { *(int32_t *) pcode = i1;pcode += 4;/*32/8*/ }
